@@ -5,7 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddOcelot();
+builder.Services.AddOcelot(builder.Configuration);
+
+var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+builder.Configuration.AddJsonFile($"ocelot.{env}.json");
 
 var app = builder.Build();
 
@@ -17,6 +20,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseOcelot().Wait();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -27,15 +32,3 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run();
-
-var hostBuilder = Host.CreateDefaultBuilder(args)
-    .ConfigureWebHostDefaults(webBuilder =>
-    {
-        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-        webBuilder.ConfigureAppConfiguration(config =>
-            config.AddJsonFile($"ocelot.{env}.json"));
-    });
-
-hostBuilder.Build().Run();
-
-app.UseOcelot().Wait();

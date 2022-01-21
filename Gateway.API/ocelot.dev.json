@@ -1,19 +1,19 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/moviles/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/api/moviles/usuarios",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 80
+          "Port":  80
         }
       ],
-      "UpstreamPathTemplate": "/api/moviles/{everything}",
+      "UpstreamPathTemplate": "/moviles",
       "UpstreamHttpMethod": [ "Get" ]
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl":  "https://localhost:5021"
+    "BaseUrl": "https://localhost:44389"
   }
 }
